@@ -1113,18 +1113,18 @@ comm.value.P = comm.arr2Clone(comm.value.p).reverse(),
 comm.value.Z = comm.arr2Clone(comm.value.z).reverse(),
 comm.args = {
     c: { text: "R", textcn: "車", img: "r_c", my: 1, bl: "c", value: comm.value.c },
-    m: { text: "N", textcn: "馬", img: "r_m", my: 1, bl: "m", value: comm.value.m },
-    x: { text: "B", textcn: "相", img: "r_x", my: 1, bl: "x", value: comm.value.x },
-    s: { text: "G", textcn: "仕", img: "r_s", my: 1, bl: "s", value: comm.value.s },
+    m: { text: "H", textcn: "馬", img: "r_m", my: 1, bl: "m", value: comm.value.m },
+    x: { text: "E", textcn: "相", img: "r_x", my: 1, bl: "x", value: comm.value.x },
+    s: { text: "A", textcn: "仕", img: "r_s", my: 1, bl: "s", value: comm.value.s },
     j: { text: "K", textcn: "帅", img: "r_j", my: 1, bl: "j", value: comm.value.j },
-    p: { text: "A", textcn: "炮", img: "r_p", my: 1, bl: "p", value: comm.value.p },
+    p: { text: "C", textcn: "炮", img: "r_p", my: 1, bl: "p", value: comm.value.p },
     z: { text: "P", textcn: "兵", img: "r_z", my: 1, bl: "z", value: comm.value.z },
     C: { text: "R", textcn: "车", img: "b_c", my: -1, bl: "c", value: comm.value.C },
-    M: { text: "N", textcn: "马", img: "b_m", my: -1, bl: "m", value: comm.value.M },
-    X: { text: "B", textcn: "象", img: "b_x", my: -1, bl: "x", value: comm.value.X },
-    S: { text: "G", textcn: "士", img: "b_s", my: -1, bl: "s", value: comm.value.S },
+    M: { text: "H", textcn: "马", img: "b_m", my: -1, bl: "m", value: comm.value.M },
+    X: { text: "E", textcn: "象", img: "b_x", my: -1, bl: "x", value: comm.value.X },
+    S: { text: "A", textcn: "士", img: "b_s", my: -1, bl: "s", value: comm.value.S },
     J: { text: "K", textcn: "将", img: "b_j", my: -1, bl: "j", value: comm.value.J },
-    P: { text: "A", textcn: "炮", img: "b_p", my: -1, bl: "p", value: comm.value.P },
+    P: { text: "C", textcn: "炮", img: "b_p", my: -1, bl: "p", value: comm.value.P },
     Z: { text: "P", textcn: "卒", img: "b_z", my: -1, bl: "z", value: comm.value.Z }
 },
 comm.getTips = function(e) {
@@ -1143,7 +1143,7 @@ comm.getTips = function(e) {
 comm.createMove = function (map,x,y,newX,newY){
    var h="";  
    var mumX=["a","b","c","d","e","f","g","h","i"];
-    var mumY=["0","１","２","３","４","５","６","７","８","９"];
+    var mumY=["0","1","2","3","4","5","6","7","8","9"];
     if (!isVerticalReverse){
     	if(typeof(map[y][x])=='undefined'){
             return h;
@@ -1179,7 +1179,7 @@ comm.createMove = function (map,x,y,newX,newY){
 comm.createMove1 = function (man,x,y,newX,newY){
 	var h="";  
 	   var mumX=["a","b","c","d","e","f","g","h","i"];
-	    var mumY=["0","１","２","３","４","５","６","７","８","９"];
+	    var mumY=["0","1","2","3","4","5","6","7","8","9"];
 	    if (!isVerticalReverse){
 	    	h+= man.text;
 	        h += mumX[x]+mumY[9-y];

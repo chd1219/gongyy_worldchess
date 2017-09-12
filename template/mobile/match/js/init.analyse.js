@@ -4,6 +4,7 @@ function initWebsocket(){
     var wsImpl = window.WebSocket || window.MozWebSocket;
     // create a new websocket and connect
     window.ws = new ReconnectingWebSocket('ws://114.55.174.231:9001/');
+    //window.ws = new ReconnectingWebSocket('ws://120.55.37.210:9001/');
     // when data is comming from the server, this metod is called
     ws.onmessage = function (evt) {
 
@@ -55,7 +56,6 @@ function loadConfig() {
         __getChessData(analysedata);
     }
     initWebsocket();
-    initTestWebsocket('ws://118.190.46.210:9001/');
 }
 function initLayer(e) {
     initCanvas(e);

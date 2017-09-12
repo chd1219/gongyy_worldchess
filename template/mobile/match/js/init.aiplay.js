@@ -249,7 +249,6 @@ function Setting() {
 			{
 				url = 'ws://121.43.37.233:9106/';
 				chessdata==''?showFloatTip("棋协大师"):1;
-				initTestWebsocket('ws://118.190.46.210:9001/');
 				break;
 			}			
 		}
