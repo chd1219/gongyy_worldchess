@@ -131,8 +131,9 @@ var boutside = -1.3;
 var routside = 10.5;
 var outsidescale = 1.58;
 var first = !1,
-    isComPlay = 0;
-
+    isComPlay = 0,
+	initMap,
+	emptyMap,
     createbroad = !0,
     currentId = 0,
     id = 0,
@@ -166,7 +167,7 @@ bill.init = function (e, a, k) {
         bill.isOffensive = isOffensive,
         bill.depth = e,
         bill.isFoul = !1,
-        bill.mans = {},
+        comm.mans = {},
         comm.createMans(a);
     for (var m = 0; m < bill.map.length; m++) for (var o = 0; o < bill.map[m].length; o++) {
         var n = bill.map[m][o];
@@ -445,19 +446,42 @@ bill.create2 = function () {
         bill.cleanChess2();
         bill.sMap = comm.arr2Clone(bill.sMapFull),
         bill.sMapList = JSON.parse(JSON.stringify(bill.chessMan)),
+        isVerticalReverse ? bill.sMap = comm.arr2Clone(bill.sMapFullReveser) : comm.sMap = comm.arr2Clone(bill.sMapFull);
+        emptyMap = emptyMap || bill.emptyMap;
+        bill.init(3, emptyMap, !1);
         bill.createMans(bill.sMap),
-        bill.init(3, bill.emptyMap, !1);
         $("#fullBtn").show();
         $("#clearBtn").hide();
     },
     bill.fullBroad = function (e) {
         bill.cleanChess();
         bill.cleanChess2();
+        initMap = initMap || comm.initMap;
         bill.sMap = comm.arr2Clone(bill.sMapEmpty),
         bill.sMapList = JSON.parse(JSON.stringify(bill.emptychessMan)),
-        bill.init(3, comm.initMap, !1);
+        bill.init(3, initMap, !1);
         $("#fullBtn").hide();
         $("#clearBtn").show();
+    },
+    bill.reverseBroad = function (e) {
+        bill.cleanChess();
+		bill.cleanChess2();		
+		isVerticalReverse ? (isVerticalReverse = 0, 
+			bill.sMap = comm.arr2Clone(bill.sMapFull),
+			emptyMap = comm.arr2Clone(bill.emptyMap),
+			initMap = comm.arr2Clone(comm.initMap)
+			) :
+			(isVerticalReverse = 1, 
+			bill.sMap = comm.arr2Clone(bill.sMapFullReveser),
+			emptyMap = comm.arrReverse(bill.emptyMap),
+			initMap = comm.arrReverse(comm.initMap)
+			);
+
+		bill.sMapList = JSON.parse(JSON.stringify(bill.chessMan));		
+		bill.init(3, emptyMap, !1);
+		bill.createMans(bill.sMap);
+		$("#fullBtn").show();
+		$("#clearBtn").hide();
     },
     bill.clickCanvas = function (e) {
 		if (mode != 5) return;
@@ -552,8 +576,7 @@ bill.clickManI2O = function (e, x, y) { //棋盘内->棋盘外
 
     y < 0 ? ( y = boutside ) : ( y = routside );
 
-    y < 0 ? ( o.my == -1 ? col = 0 : col = -1 ) : ( o.my == 1 ? col = 1 : col = -1 );
-    if (col == -1) return !1;
+    y < 0 ? ( o.my == -1 ? col = 0 : col = 1 ) : ( o.my == 1 ? col = 1 : col = 0);
 
     var maptemp = {"C": 0, "M": 1, "P": 2, "X": 3, "S": 4, "Z": 5, "c": 0, "m": 1, "p": 2, "x": 3, "s": 4, "z": 5};
     e = maptemp[m.slice(0, 1)];
@@ -654,11 +677,13 @@ bill.clickPointPre = function (e, a) { //摆棋模式
     }
     //棋盘内->棋盘外
     if (a < 0 || a > 9) {
-        a < 0 ? ( a = boutside ) : ( a = routside );
-
-        a < 0 ? ( o.my == -1 ? col = 0 : col = -1 ) : ( o.my == 1 ? col = 1 : col = -1 );
-        if (col == -1) return !1;
-
+    	
+    	if (isVerticalReverse) {
+			(o.my == 1)  ? (a= boutside, col = 0) : (a = routside, col = 1);			
+		}
+		else {
+			(o.my == -1)  ? (a = boutside, col = 0) : (a = routside, col = 1);	
+		}
         var maptemp = {"C": 0, "M": 1, "P": 2, "X": 3, "S": 4, "Z": 5, "c": 0, "m": 1, "p": 2, "x": 3, "s": 4, "z": 5};
         e = maptemp[m.slice(0, 1)];
         if (e > -1) {
@@ -669,8 +694,8 @@ bill.clickPointPre = function (e, a) { //摆棋模式
             e = e * outsidescale;
             templist.push(m);
 
-            stage.removeChild(chessnum[col * 6 + e / outsidescale]),
-                templist.length ? bill.drawNum(col, e / outsidescale, templist.length) : !1;
+            stage.removeChild(chessnum[col * 6 + e / outsidescale]);
+            templist.length ? bill.drawNum(col, e / outsidescale, templist.length) : !1;
         }
         else {
             showFloatTip("将帅不能移出棋盘");
@@ -704,19 +729,20 @@ bill.clickPointPre = function (e, a) { //摆棋模式
             }
         }
         templist.length -= 1;
-        newchess = templist[0];
+        newchess = templist[0];        
         bill.createMan(newchess, o.y, o.x),
-            stage.removeChild(chessnum[col * 6 + row]),
-            templist.length ? bill.drawNum(col, row, templist.length) : !1;
+        stage.removeChild(chessnum[col * 6 + row]);
+        templist.length ? bill.drawNum(col, row, templist.length) : !1;
         bill.sMap[col][row] = newchess;
     }
     else {
         delete bill.map[o.y][o.x];
     }
 
-    o.x = e,
-        o.y = a,
-        o.animate();
+	var nowMan = comm.mans[bill.nowManKey];
+    nowMan.x = e,
+    nowMan.y = a,
+    nowMan.animate();
     //删除原来的棋子
     setTimeout(function () {
         removeChess(oldchess)
@@ -900,8 +926,12 @@ bill.cleanLine = function () {
         //$('#delete').addClass('mui-active');
 
         //方便用户设置
+        if (isVerticalReverse) {
+			$("#verticalreverseTog").addClass('mui-active');
+			$("#verticalreverseTog").html('<div class="mui-switch-handle" style="transition-duration: 0.2s; transform: translate(43px, 0px);"></div>');
+		}
         mui('#delete').popover('toggle');
-
+		
     },
     bill.note = function () {
         popupDiv('notedialog');
@@ -1401,6 +1431,7 @@ bill.cleanLine = function () {
     bill.notes = [],
     bill.emptyMap = [[, , , , "J0", , , , ""], [, , , , , , , , ""], [, , , , , , , , ""], [, , , , , , , , ""], [, , , , , , , , ""], [, , , , , , , , ""], [, , , , , , , , ""], [, , , , , , , , ""], [, , , , , , , , ""], [, , , , "j0", , , , ""]],
     bill.sMapFull = [["C0", "M0", "P0", "X0", "S0", "Z0", ""], ["c0", "m0", "p0", "x0", "s0", "z0", ""]],
+    bill.sMapFullReveser = [["c0", "m0", "p0", "x0", "s0", "z0"],["C0", "M0", "P0", "X0", "S0", "Z0"]],
     bill.sMapEmpty = [[, , , , , , , ,], [, , , , ,]],
     bill.chessMan = {
         "C": ["C0", "C1"],
@@ -1436,7 +1467,7 @@ bill.createMan = function (e, a, m) {
         n.x = m,
             n.y = a,
             comm.mans[e] = n;
-        var t = addChess(n.pater, comm.spaceX * n.x + comm.pointStartX, comm.spaceY * n.y + comm.pointStartY);
+        var t = addChess(n.pater);
         n.chess = t,
             n.move()
     }
@@ -1575,11 +1606,11 @@ bill.createMan = function (e, a, m) {
     bill.checkJiang = function () {
         for (var e = 0; e < 3; e++) for (var a = 3; a < 6; a++) {
             var m = bill.map[e][a];
-            if (m == "J0") {
+            if (m == "J0" || m == "j0") {
                 var flag = 0;
                 for (var o = e + 1; o < bill.map.length; o++) {
                     m = bill.map[o][a];
-                    if (m == "j0") {
+                    if (m == "j0" || m == "J0") {
                         if (flag == 0)
                             return !1;
                     }

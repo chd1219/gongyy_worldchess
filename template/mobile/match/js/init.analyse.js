@@ -106,6 +106,7 @@ onload = function() {
     $("#endBtn").on('tap',bill.replayEnd),
     $("#regretBtn").on('tap',bill.regret),
     $("#sendBtn").on('tap',bill.send),
+    $("#reverseBtn").on('tap',bill.reverseBroad),
     $("#fullBtn").on('tap',bill.fullBroad),
     $("#clearBtn").on('tap',bill.cleanBroad),               
     $("#saveBtn").on('tap',bill.save);      

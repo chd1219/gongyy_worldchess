@@ -2,7 +2,7 @@ var ws = null;
 function initWebsocket(){
     var wsImpl = window.WebSocket || window.MozWebSocket;
     // create a new websocket and connect
-    window.ws = new ReconnectingWebSocket('ws://121.43.37.233:9001/');
+    window.ws = new ReconnectingWebSocket('ws://114.55.174.231:9001/');
     //window.ws = new ReconnectingWebSocket('ws://118.190.46.210:8182/');
     // when data is comming from the server, this metod is called
     ws.onmessage = function (evt) {
@@ -52,6 +52,7 @@ onload = function() {
     $("#regretBtn").on('tap',bill.regret),
     $("#sendBtn").on('tap',bill.send),
     $("#fullBtn").on('tap',bill.fullBroad),
+    $("#reverseBtn").on('tap',bill.reverseBroad),
     $("#clearBtn").on('tap',bill.cleanBroad),               
     $("#saveBtn").on('tap',bill.save);      
 };
