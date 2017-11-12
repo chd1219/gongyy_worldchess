@@ -3,7 +3,7 @@ var wstest = null;
 function initWebsocket(){
     var wsImpl = window.WebSocket || window.MozWebSocket;
     // create a new websocket and connect
-    window.ws = new ReconnectingWebSocket('ws://114.55.174.231:9001/');
+    window.ws = new ReconnectingWebSocket('ws://47.96.28.91:9111/');
     //window.ws = new ReconnectingWebSocket('ws://120.55.37.210:9001/');
     // when data is comming from the server, this metod is called
     ws.onmessage = function (evt) {

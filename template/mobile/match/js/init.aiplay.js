@@ -211,43 +211,43 @@ function Setting() {
 		switch (power){
 			case 'level-0':
 			{
-				url = 'ws://121.43.37.233:9100/';
+				url = 'ws://47.96.28.91:9100/';
 				chessdata==''?showFloatTip("六级棋士"):1;
 				break;
 			}
 			case 'level-1':
 			{
-				url = 'ws://121.43.37.233:9101/';
+				url = 'ws://47.96.28.91:9101/';
 				chessdata==''?showFloatTip("五级棋士"):1;
 				break;
 			}
 			case 'level-2':
 			{
-				url = 'ws://121.43.37.233:9102/';
+				url = 'ws://47.96.28.91:9102/';
 				chessdata==''?showFloatTip("四级棋士"):1;
 				break;
 			}
 			case 'level-3':
 			{
-				url = 'ws://121.43.37.233:9103/';
+				url = 'ws://47.96.28.91:9103/';
 				chessdata==''?showFloatTip("三级棋士"):1;
 				break;
 			}
 			case 'level-4':
 			{
-				url = 'ws://121.43.37.233:9104/';
+				url = 'ws://47.96.28.91:9104/';
 				chessdata==''?showFloatTip("二级棋士"):1;
 				break;
 			}
 			case 'level-5':
 			{
-				url = 'ws://121.43.37.233:9105/';
+				url = 'ws://47.96.28.91:9105/';
 				chessdata==''?showFloatTip("一级棋士"):1;
 				break;
 			}
 			case 'level-6':
 			{
-				url = 'ws://121.43.37.233:9106/';
+				url = 'ws://47.96.28.91:9106/';
 				chessdata==''?showFloatTip("棋协大师"):1;
 				break;
 			}			
